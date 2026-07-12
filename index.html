@@ -165,9 +165,24 @@
   .topbar{
     display:flex;
     align-items:center;
-    justify-content:flex-end;
+    justify-content:space-between;
     gap:22px;
     margin-bottom: 22px;
+  }
+  .topbar .left-group{
+    display:flex;
+    align-items:center;
+    gap:18px;
+  }
+  .topbar .right-group{
+    display:flex;
+    align-items:center;
+    gap:22px;
+  }
+  .topbar .page-title{
+    color:#5b6478;
+    font-size:15px;
+    font-weight:500;
   }
   .topbar .icon-btn{
     background:none;border:none;color:#aeb7c9;
@@ -501,13 +516,18 @@
   <!-- MAIN -->
   <main class="main">
     <div class="topbar">
-      <button class="icon-btn">✕</button>
-      <button class="icon-btn">🔍</button>
-      <button class="icon-btn">🌐</button>
-      <button class="icon-btn">文A</button>
-      <button class="icon-btn">⛶</button>
-      <button class="icon-btn">👤</button>
-      <span class="portal-title">Student Portal</span>
+      <div class="left-group">
+        <button class="icon-btn">✕</button>
+        <button class="icon-btn">🔍</button>
+        <span class="page-title" id="page-title"></span>
+      </div>
+      <div class="right-group">
+        <button class="icon-btn">🌐</button>
+        <button class="icon-btn">文A</button>
+        <button class="icon-btn">⛶</button>
+        <button class="icon-btn">👤</button>
+        <span class="portal-title">Student Portal</span>
+      </div>
     </div>
 
     <div id="view-home" class="view show">
@@ -618,7 +638,7 @@
           </thead>
           <tbody>
             <tr>
-              <td class="sem-cell" rowspan="7">1st Year – 1st Semester</td>
+              <td class="sem-cell" rowspan="9">1st Year – 1st Semester</td>
               <td>SS 1C</td>
               <td>Readings in Philippine History</td>
               <td></td>
@@ -660,6 +680,31 @@
               <td></td>
               <td class="remark-pass">Passed</td>
             </tr>
+            <tr>
+              <td>MATH 1F</td>
+              <td>Mathematics in the Modern World</td>
+              <td></td>
+              <td class="remark-pass">Passed</td>
+            </tr>
+            <tr>
+              <td>GE Elec 1</td>
+              <td>Public Speaking and Persuasion</td>
+              <td></td>
+              <td class="remark-pass">Passed</td>
+            </tr>
+            <tr>
+              <td class="sem-cell" rowspan="2">1st Year – 2nd Semester</td>
+              <td>MASEco 2</td>
+              <td>Managerial Economics</td>
+              <td>MASEco 1</td>
+              <td class="remark-pass">Passed</td>
+            </tr>
+            <tr>
+              <td>REBT 1</td>
+              <td>Law on Obligations and Contracts</td>
+              <td></td>
+              <td class="remark-pass">Passed</td>
+            </tr>
           </tbody>
         </table>
       </div>
@@ -682,6 +727,7 @@
     document.getElementById('nav-home').classList.toggle('active', name === 'home' && !document.getElementById('submenu-academic').classList.contains('show'));
 
     document.querySelectorAll('#submenu-academic li').forEach(li => li.classList.remove('active'));
+    document.getElementById('page-title').textContent = (name === 'eval') ? 'Evaluation Records' : '';
     if(name === 'eval'){
       document.getElementById('nav-eval').classList.add('active');
       document.getElementById('nav-home').classList.remove('active');
