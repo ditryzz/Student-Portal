@@ -37,6 +37,23 @@
     border-right: 1px solid var(--border);
     padding: 22px 18px;
     flex-shrink:0;
+    display:flex;
+    flex-direction:column;
+    min-height:100vh;
+  }
+  .sidebar-divider{
+    height:1px;
+    background: var(--border);
+    margin: 0 -18px 16px;
+  }
+  .sidebar-footer{
+    margin-top:auto;
+    padding-top:14px;
+    border-top:1px solid var(--border);
+    display:flex;
+    justify-content:space-between;
+    font-size:11px;
+    color:#4d5674;
   }
   .brand{
     display:flex;
@@ -116,8 +133,21 @@
   }
   nav li .icon{
     width:18px;
-    text-align:center;
-    opacity:.9;
+    height:18px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#8b95ab;
+    flex-shrink:0;
+  }
+  nav li .icon svg{
+    width:17px;
+    height:17px;
+    stroke: currentColor;
+    fill:none;
+  }
+  nav li.active .icon{
+    color: var(--blue);
   }
   nav li .caret{
     margin-left:auto;
@@ -145,9 +175,9 @@
     cursor:pointer;
   }
   .submenu li.active{
-    color:#fff;
+    color: var(--blue);
     font-weight:600;
-    background: rgba(59,109,240,0.1);
+    background: none;
   }
   .submenu li:hover{
     color:#e7ecf5;
@@ -167,7 +197,7 @@
     align-items:center;
     justify-content:space-between;
     gap:22px;
-    margin-bottom: 22px;
+    margin-bottom: 14px;
   }
   .topbar .left-group{
     display:flex;
@@ -187,12 +217,26 @@
   .topbar .icon-btn{
     background:none;border:none;color:#aeb7c9;
     font-size:17px;cursor:pointer;
+    display:flex; align-items:center; justify-content:center;
+    width:22px; height:22px;
+    padding:0;
+  }
+  .topbar .icon-btn svg{
+    width:19px;
+    height:19px;
+    stroke: currentColor;
+    fill:none;
   }
   .topbar .portal-title{
     color: var(--blue);
     font-weight:700;
     font-size:16px;
     margin-left:6px;
+  }
+  .topbar-divider{
+    height:1px;
+    background: var(--border);
+    margin: 0 0 22px;
   }
 
   .hello-card{
@@ -445,37 +489,45 @@
   .eval-table{
     width:100%;
     border-collapse:collapse;
-    font-size:13px;
+    font-size:13.5px;
   }
   .eval-table thead th{
     text-align:left;
-    padding: 12px 16px;
+    padding: 14px 20px;
     font-size:11px;
     letter-spacing:.4px;
     color: var(--muted);
     font-weight:700;
     border-bottom:1px solid var(--border);
+    background: var(--panel);
   }
   .eval-table td{
-    padding: 14px 16px;
-    vertical-align: top;
-    border-bottom: 1px solid rgba(255,255,255,0.03);
+    padding: 14px 20px;
+    vertical-align: middle;
+  }
+  .eval-table tbody tr.passed-row td{
+    background: #3f9556;
+    color:#eafff0;
+    border-bottom: 1px solid #2f7a43;
+  }
+  .eval-table tbody tr.failed-row td{
+    background: #9a3b3b;
+    color:#ffecec;
+    border-bottom: 1px solid #7a2c2c;
   }
   .sem-cell{
-    background: rgba(52,199,120,0.16);
-    color:#8fe6b3;
     font-weight:700;
-    font-size:13px;
-    border-left: 3px solid var(--green);
+    font-size:13.5px;
+    color:#fff;
     white-space:nowrap;
   }
   .remark-pass{
-    color: var(--green);
-    font-weight:600;
+    color:#eafff0;
+    font-weight:700;
   }
   .remark-fail{
-    color: var(--red);
-    font-weight:600;
+    color:#ffecec;
+    font-weight:700;
   }
 </style>
 </head>
@@ -495,40 +547,48 @@
       <div class="profile-course">Bachelor of Science in<br>Accountancy</div>
     </div>
 
+    <div class="sidebar-divider"></div>
+
     <nav>
       <ul>
-        <li id="nav-home" class="active" onclick="showView('home')"><span class="icon">🏠</span> Home</li>
-        <li><span class="icon">📖</span> Class Records <span class="caret">▾</span></li>
-        <li id="nav-academic" onclick="toggleSubmenu(this)"><span class="icon">📘</span> Academic Records <span class="caret">▾</span></li>
+        <li id="nav-home" class="active" onclick="showView('home')"><span class="icon"><svg viewBox="0 0 24 24"><path d="M3 11l9-8 9 8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 10v10h14V10" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span> Home</li>
+        <li><span class="icon"><svg viewBox="0 0 24 24"><path d="M4 5a2 2 0 0 1 2-2h11v16H6a2 2 0 0 0-2 2V5z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M17 19a2 2 0 0 0 2-2V3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span> Class Records <span class="caret">▾</span></li>
+        <li id="nav-academic" onclick="toggleSubmenu(this)"><span class="icon"><svg viewBox="0 0 24 24"><path d="M12 3l9 4.5-9 4.5-9-4.5L12 3z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M6 10.5V16c0 1.5 2.7 3 6 3s6-1.5 6-3v-5.5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span> Academic Records <span class="caret">▾</span></li>
         <ul class="submenu" id="submenu-academic">
           <li id="nav-report" onclick="event.stopPropagation(); showView('home')">Report of Grades</li>
           <li id="nav-eval" onclick="event.stopPropagation(); showView('eval')">Academic Evaluation</li>
         </ul>
-        <li><span class="icon">🌐</span> Online Services <span class="caret">▾</span></li>
-        <li><span class="icon">▦</span> Student Ledger</li>
-        <li><span class="icon">👥</span> Community</li>
-        <li><span class="icon">📕</span> ASCE Library</li>
-        <li><span class="icon">📍</span> Healthcare Services</li>
+        <li><span class="icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" stroke-width="2"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18 14 14 0 0 1 0-18z" stroke-width="2"/></svg></span> Online Services <span class="caret">▾</span></li>
+        <li><span class="icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" stroke-width="2"/><rect x="14" y="3" width="7" height="7" stroke-width="2"/><rect x="3" y="14" width="7" height="7" stroke-width="2"/><rect x="14" y="14" width="7" height="7" stroke-width="2"/></svg></span> Student Ledger</li>
+        <li><span class="icon"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3" stroke-width="2"/><path d="M2 20c0-3.3 3.1-6 7-6s7 2.7 7 6" stroke-width="2" stroke-linecap="round"/><circle cx="17" cy="9" r="2.5" stroke-width="2"/><path d="M15.5 14.2c2.6.4 4.5 2.4 4.5 5.8" stroke-width="2" stroke-linecap="round"/></svg></span> Community</li>
+        <li><span class="icon"><svg viewBox="0 0 24 24"><path d="M5 4h9a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3V4z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 17a2 2 0 0 1 2-2h10" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span> ASCE Library</li>
+        <li><span class="icon"><svg viewBox="0 0 24 24"><path d="M12 21s7-6.1 7-11.5A7 7 0 0 0 5 9.5C5 14.9 12 21 12 21z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="9.5" r="2.3" stroke-width="2"/></svg></span> Healthcare Services</li>
       </ul>
     </nav>
+
+    <div class="sidebar-footer">
+      <span>@2026 Copyright</span>
+      <span>version 1.0.0</span>
+    </div>
   </aside>
 
   <!-- MAIN -->
   <main class="main">
     <div class="topbar">
       <div class="left-group">
-        <button class="icon-btn">✕</button>
-        <button class="icon-btn">🔍</button>
+        <button class="icon-btn"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18" stroke-width="2" stroke-linecap="round"/></svg></button>
+        <button class="icon-btn"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7" stroke-width="2"/><path d="M21 21l-4.3-4.3" stroke-width="2" stroke-linecap="round"/></svg></button>
         <span class="page-title" id="page-title"></span>
       </div>
       <div class="right-group">
-        <button class="icon-btn">🌐</button>
-        <button class="icon-btn">文A</button>
-        <button class="icon-btn">⛶</button>
-        <button class="icon-btn">👤</button>
+        <button class="icon-btn"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" stroke-width="2"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18 14 14 0 0 1 0-18z" stroke-width="2"/></svg></button>
+        <button class="icon-btn"><svg viewBox="0 0 24 24"><path d="M4 6h9M8 4v2c0 4-2 7-6 9M6 8c1 2 3 3 6 3M11 20l4-9 4 9M12.5 17h5" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <button class="icon-btn"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2" stroke-width="2"/><path d="M4 15l4-4 3 3 5-5 4 4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <button class="icon-btn"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5" stroke-width="2"/><path d="M4.5 20c0-4.1 3.4-7 7.5-7s7.5 2.9 7.5 7" stroke-width="2" stroke-linecap="round"/></svg></button>
         <span class="portal-title">Student Portal</span>
       </div>
     </div>
+    <div class="topbar-divider"></div>
 
     <div id="view-home" class="view show">
       <section class="hello-card">
@@ -637,69 +697,69 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
+            <tr class="passed-row">
               <td class="sem-cell" rowspan="9">1st Year – 1st Semester</td>
               <td>SS 1C</td>
               <td>Readings in Philippine History</td>
               <td></td>
               <td class="remark-pass">Passed</td>
             </tr>
-            <tr>
+            <tr class="passed-row">
               <td>SS 1D</td>
               <td>The Contemporary World</td>
               <td></td>
               <td class="remark-pass">Passed</td>
             </tr>
-            <tr>
+            <tr class="passed-row">
               <td>FAR 0</td>
               <td>Financial Accounting and Reporting Conceptual Framework and Accounting Standards</td>
               <td></td>
               <td class="remark-pass">Passed</td>
             </tr>
-            <tr>
+            <tr class="passed-row">
               <td>MASEco 1</td>
               <td>Economic Development</td>
               <td></td>
               <td class="remark-pass">Passed</td>
             </tr>
-            <tr>
+            <tr class="passed-row">
               <td>OM/TQM</td>
               <td>Operations Management and TQM</td>
               <td></td>
               <td class="remark-pass">Passed</td>
             </tr>
-            <tr>
+            <tr class="passed-row">
               <td>PATHFit 1</td>
               <td>Physical Activities Toward Health and Fitness 1</td>
               <td></td>
               <td class="remark-pass">Passed</td>
             </tr>
-            <tr>
+            <tr class="passed-row">
               <td>NSTP 1</td>
               <td>ROTC/CWTS/LTS 1</td>
               <td></td>
               <td class="remark-pass">Passed</td>
             </tr>
-            <tr>
+            <tr class="passed-row">
               <td>MATH 1F</td>
               <td>Mathematics in the Modern World</td>
               <td></td>
               <td class="remark-pass">Passed</td>
             </tr>
-            <tr>
+            <tr class="passed-row">
               <td>GE Elec 1</td>
               <td>Public Speaking and Persuasion</td>
               <td></td>
               <td class="remark-pass">Passed</td>
             </tr>
-            <tr>
+            <tr class="passed-row">
               <td class="sem-cell" rowspan="2">1st Year – 2nd Semester</td>
               <td>MASEco 2</td>
               <td>Managerial Economics</td>
               <td>MASEco 1</td>
               <td class="remark-pass">Passed</td>
             </tr>
-            <tr>
+            <tr class="passed-row">
               <td>REBT 1</td>
               <td>Law on Obligations and Contracts</td>
               <td></td>
@@ -724,13 +784,10 @@
     document.querySelectorAll('.view').forEach(v => v.classList.remove('show'));
     document.getElementById('view-' + name).classList.add('show');
 
-    document.getElementById('nav-home').classList.toggle('active', name === 'home' && !document.getElementById('submenu-academic').classList.contains('show'));
-
     document.querySelectorAll('#submenu-academic li').forEach(li => li.classList.remove('active'));
     document.getElementById('page-title').textContent = (name === 'eval') ? 'Evaluation Records' : '';
     if(name === 'eval'){
       document.getElementById('nav-eval').classList.add('active');
-      document.getElementById('nav-home').classList.remove('active');
       if(!document.getElementById('submenu-academic').classList.contains('show')){
         document.getElementById('submenu-academic').classList.add('show');
         document.getElementById('nav-academic').classList.add('open');
