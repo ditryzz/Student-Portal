@@ -1,1 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Student Portal</title>
+<style>
+  :root{
+    --bg: #0b1220;
+    --panel: #111a2e;
+    --panel-2: #131d33;
+    --border: #1f2b45;
+    --text: #e7ecf5;
+    --muted: #8b95ab;
+    --blue: #3b6df0;
+    --blue-soft: #24325a;
+    --yellow: #f4c430;
+    --green: #34c778;
+    --red: #ef4444;
+    --sidebar-w: 232px;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+  }
+  .layout{
+    display:flex;
+    min-height:100vh;
+  }
 
+  /* SIDEBAR */
+  .sidebar{
+    width: var(--sidebar-w);
+    background: #0c1424;
+    border-right: 1px solid var(--border);
+    padding: 22px 18px;
+    flex-shrink:0;
+  }
+  .brand{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom: 34px;
+  }
+  .brand-logo{
+    width:34px;height:34px;border-radius:50%;
+    background:#1a2540;
+    display:flex;align-items:center;justify-content:center;
+    font-size:16px;
+  }
+  .brand-name{
+    font-size:11px;
+    line-height:1.3;
+    color:#e2564f;
+    font-weight:700;
+    letter-spacing:.3px;
+  }
+  .profile{
+    text-align:center;
+    margin-bottom: 30px;
+  }
+  .avatar{
+    width:80px;height:80px;border-radius:50%;
+    background: var(--yellow);
+    color:#3a2c00;
+    font-size:34px;font-weight:700;
+    display:flex;align-items:center;justify-content:center;
+    margin: 0 auto 14px;
+  }
+  .profile-name{
+    font-weight:700;
+    font-size:15px;
+    margin-bottom:4px;
+  }
+  .profile-course{
+    font-size:12px;
+    color: var(--muted);
+    line-height:1.4;
+  }
+  nav ul{
+    list-style:none;
+    margin:0;padding:0;
+  }
+  nav li{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:11px 8px;
+    font-size:13.5px;
+    color:#c4cbdb;
+    border-radius:8px;
+    cursor:pointer;
+    position:relative;
+  }
+  nav li.active{
+    color:#fff;
+    background: rgba(59,109,240,0.12);
+    font-weight:600;
+  }
+  nav li.active::before{
+    content:"";
+    position:absolute;
+    left:-18px;
+    top:0;bottom:0;
+    width:3px;
+    background: var(--blue);
+    border-radius:2px;
+  }
+  nav li .icon{
+    width:18px;
+    text-align:center;
+    opacity:.9;
+  }
+  nav li .caret{
+    margin-left:auto;
+    font-size:10px;
+    opacity:.6;
+  }
+
+  /* MAIN */
+  .main{
+    flex:1;
+    padding: 22px 30px 40px;
+    min-width:0;
+  }
+  .topbar{
+    display:flex;
+    align-items:center;
+    justify-content:flex-end;
+    gap:22px;
+    margin-bottom: 22px;
+  }
+  .topbar .icon-btn{
+    background:none;border:none;color:#aeb7c9;
+    font-size:17px;cursor:pointer;
+  }
+  .topbar .portal-title{
+    color: var(--blue);
+    font-weight:700;
+    font-size:16px;
+    margin-left:6px;
+  }
+
+  .hello-card{
+    background: linear-gradient(135deg, #2a3a6e, #1a2647);
+    border-radius: 14px;
+    padding: 26px 30px;
+    margin-bottom: 18px;
+    border: 1px solid #2c3a63;
+  }
+  .hello-card h1{
+    margin:0 0 10px;
+    font-size: 26px;
+  }
+  .hello-card p{
+    margin:0 0 18px;
+    color: #c7cee4;
+    font-size:14px;
+    max-width: 640px;
+    line-height:1.5;
+  }
+  .pill-row{
+    display:flex;
+    gap:12px;
+    flex-wrap:wrap;
+  }
+  .pill{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding: 9px 16px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight:600;
+  }
+  .pill.id{
+    background: var(--yellow);
+    color:#3a2c00;
+  }
+  .pill.course, .pill.year{
+    background: rgba(255,255,255,0.08);
+    color:#e7ecf5;
+    font-weight:500;
+  }
+
+  .advisory{
+    background: var(--panel);
+    border:1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 20px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom: 18px;
+    font-size:13.5px;
+    color:#c9a227;
+    font-weight:600;
+    cursor:pointer;
+  }
+  .advisory .chev{
+    color: var(--muted);
+    font-weight:400;
+  }
+
+  .stat-grid{
+    display:grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+  .stat-card{
+    background: var(--panel);
+    border:1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px 20px;
+  }
+  .stat-card .stat-icon{
+    width:34px;height:34px;
+    border-radius:8px;
+    display:flex;align-items:center;justify-content:center;
+    margin-bottom: 22px;
+    font-size:16px;
+  }
+  .stat-icon.star{ color:#3b6df0; }
+  .stat-icon.grad{ color:#3bb0f0; }
+  .stat-icon.pass{ color: var(--green); }
+  .stat-icon.fail{
+    background: var(--red);
+    color:#fff;
+    width:26px;height:26px;
+    border-radius:6px;
+    font-size:13px;
+  }
+  .stat-value{
+    font-size: 26px;
+    font-weight:700;
+    margin-bottom:3px;
+  }
+  .stat-label{
+    font-size: 12.5px;
+    color: var(--muted);
+  }
+
+  .bottom-grid{
+    display:grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap:16px;
+  }
+  .info-card{
+    background: var(--panel);
+    border:1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px 20px;
+    display:flex;
+    align-items:center;
+    gap:14px;
+  }
+  .info-icon{
+    width:38px;height:38px;
+    border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    font-size:16px;
+    flex-shrink:0;
+  }
+  .info-icon.gold{ background:#3a2f10; color: var(--yellow); }
+  .info-icon.blue{ background:#122236; color:#3bb0f0; }
+  .info-label{
+    font-size:11.5px;
+    color: var(--muted);
+    font-weight:700;
+    letter-spacing:.3px;
+    margin-bottom:4px;
+  }
+  .info-value{
+    font-size:19px;
+    font-weight:700;
+  }
+
+  .donut-card{
+    position:relative;
+    overflow:hidden;
+  }
+  .donut-card .info-label{
+    position:absolute;
+    top:20px;left:56px;
+  }
+  .donut-wrap{
+    width:38px;height:38px;
+    border-radius:50%;
+    background: conic-gradient(#3b6df0 0% 65%, #1f2b45 65% 100%);
+    flex-shrink:0;
+  }
+  .fox{
+    position:absolute;
+    right:14px;
+    bottom:-10px;
+    width:64px;height:64px;
+    border-radius:50%;
+    background:#fff;
+    display:flex;align-items:center;justify-content:center;
+    font-size:30px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  }
+  .big-blue-arc{
+    position:absolute;
+    right:-30px;
+    bottom:-60px;
+    width:160px;height:160px;
+    border-radius:50%;
+    background: var(--blue);
+  }
+</style>
+</head>
+<body>
+<div class="layout">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-logo">🔺</div>
+      <div class="brand-name">TARLAC STATE<br>UNIVERSITY</div>
+    </div>
+
+    <div class="profile">
+      <div class="avatar">J</div>
+      <div class="profile-name">John Fritz Dungca</div>
+      <div class="profile-course">Bachelor of Science in<br>Accountancy</div>
+    </div>
+
+    <nav>
+      <ul>
+        <li class="active"><span class="icon">🏠</span> Home</li>
+        <li><span class="icon">📖</span> Class Records <span class="caret">▾</span></li>
+        <li><span class="icon">📘</span> Academic Records <span class="caret">▾</span></li>
+        <li><span class="icon">🌐</span> Online Services <span class="caret">▾</span></li>
+        <li><span class="icon">▦</span> Student Ledger</li>
+        <li><span class="icon">👥</span> Community</li>
+        <li><span class="icon">📕</span> ASCE Library</li>
+      </ul>
+    </nav>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+    <div class="topbar">
+      <button class="icon-btn">✕</button>
+      <button class="icon-btn">🔍</button>
+      <button class="icon-btn">🌐</button>
+      <button class="icon-btn">文A</button>
+      <button class="icon-btn">⛶</button>
+      <button class="icon-btn">👤</button>
+      <span class="portal-title">Student Portal</span>
+    </div>
+
+    <section class="hello-card">
+      <h1>Hello, John Fritz Dungca ! 👋</h1>
+      <p>Welcome to your centralized hub. Access your academic information, services, and resources in real-time.</p>
+      <div class="pill-row">
+        <span class="pill id">🎓 2025100308</span>
+        <span class="pill course">📄 Bachelor of Science in Accountancy</span>
+        <span class="pill year">📊 Year 2nd Year</span>
+      </div>
+    </section>
+
+    <div class="advisory">
+      <span>📢 ADVISORY: ONEDRIVE STORAGE LIMIT (Action Required)</span>
+      <span class="chev">⌄</span>
+    </div>
+
+    <div class="stat-grid">
+      <div class="stat-card">
+        <div class="stat-icon star">★</div>
+        <div class="stat-value">1.7065</div>
+        <div class="stat-label">Cumulative GWA</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon grad">🎓</div>
+        <div class="stat-value">3</div>
+        <div class="stat-label">Semesters</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon pass">✅</div>
+        <div class="stat-value">17</div>
+        <div class="stat-label">Subjects Passed</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon fail">✕</div>
+        <div class="stat-value">0</div>
+        <div class="stat-label">Subjects Failed</div>
+      </div>
+    </div>
+
+    <div class="bottom-grid">
+      <div class="info-card">
+        <div class="info-icon gold">💳</div>
+        <div>
+          <div class="info-label">OUTSTANDING BALANCE</div>
+          <div class="info-value">₱ 0.00</div>
+        </div>
+      </div>
+      <div class="info-card">
+        <div class="info-icon blue">📷</div>
+        <div>
+          <div class="info-label">PENDING ONLINE PAYMENT</div>
+          <div class="info-value">₱ 0.00</div>
+        </div>
+      </div>
+      <div class="info-card donut-card">
+        <div class="donut-wrap"></div>
+        <div class="info-label">ENROLLED SUBJECT STATUS</div>
+        <div class="big-blue-arc"></div>
+        <div class="fox">🦊</div>
+      </div>
+    </div>
+
+  </main>
+</div>
+</body>
+</html>
